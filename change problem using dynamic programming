@@ -1,0 +1,32 @@
+# Making Change Problem using Dynamic Programming
+
+def making_change(coins, amount):
+    # dp[i] stores the minimum coins needed to make amount i
+    dp = [float('inf')] * (amount + 1)
+
+    # Base case
+    dp[0] = 0
+
+    # Calculate minimum coins for each amount
+    for i in range(1, amount + 1):
+        for coin in coins:
+            if coin <= i:
+                dp[i] = min(dp[i], dp[i - coin] + 1)
+
+    # Check if change is possible
+    if dp[amount] == float('inf'):
+        return -1
+
+    return dp[amount]
+
+
+# Main program
+coins = list(map(int, input("Enter coin denominations: ").split()))
+amount = int(input("Enter the amount: "))
+
+result = making_change(coins, amount)
+
+if result == -1:
+    print("Change cannot be made.")
+else:
+    print("Minimum number of coins required:", result)
